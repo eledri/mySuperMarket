@@ -19,8 +19,8 @@ server.use("/api/products", productsController);
 server.use("/api/customer", customersController);
 server.use("/api/order", orderController);
 server.use("*", (request, response) => {
-  response.status(404).send("Route not found");
+    response.sendFile(path.join(__dirname, "./frontend/index.html"))
 });
 
 const port = process.env.PORT || 3001
-const expressListener = server.listen(port, () => console.log("Listening..."));
+server.listen(port, () => console.log("Listening..."));
