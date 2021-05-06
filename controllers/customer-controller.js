@@ -98,7 +98,7 @@ router.post("/:cartId/", verifyLoggedIn, async (request, response) => {
         return;
       }
       const addedItem = await customerLogic.addItemAsync(item, cartId);
-      if(addedItem === 400) return 
+      if(addedItem === 400) return response.status(400).send("מוצר זה נמצא כבר בעגלה")
       response.status(201).send(addedItem[0]);
     } catch (err) {
       response.status(500).send(err.message);
