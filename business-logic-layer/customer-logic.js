@@ -7,18 +7,35 @@ async function getAllCartItemsByIdAsync(cartId) {
   return cartItems;
 }
 
+
+//check if item in cart
+async function getCartItemByIdAsync(cartId, productId) {
+  const sql = `SELECT productId from cart_items where cartId = ${cartId} and ProductId = ${productId}`;
+  const checkIfIsInCart = await dal.executeAsync(sql);
+  if (checkIfIsInCart.length === 0) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 //add product item to cart
 async function addItemAsync(item, cartId) {
-  const sql = `INSERT INTO cart_items VALUES(DEFAULT, ?, ?, ?, ?)`;
-  const info = await dal.executeAsync(sql, [
-    item.productId,
-    item.quantity,
-    cartId,
-    item.price * item.quantity,
-  ]);
-  item.itemId = info.insertId;
-  item.cartId = cartId;
-  return returnProduct(cartId, item.productId);
+  const checkIfIsInCart = await getCartItemByIdAsync(cartId, item.productId);
+  if (checkIfIsInCart !== true) {
+    const sql = `INSERT INTO cart_items VALUES(DEFAULT, ?, ?, ?, ?)`;
+    const info = await dal.executeAsync(sql, [
+      item.productId,
+      item.quantity,
+      cartId,
+      item.price * item.quantity,
+    ]);
+    item.itemId = info.insertId;
+    item.cartId = cartId;
+    return returnProduct(cartId, item.productId);
+  } else {
+    return 400;
+  }
 }
 
 // return the added product
