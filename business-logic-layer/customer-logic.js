@@ -87,7 +87,8 @@ async function addCartByUserAsync(cart, userId, date) {
 
 //update cartStatus 0 or 1
 async function updateCartStatusAsync(cart, cart_status, cartId) {
-  const sql = `update shopping_cart set cart_status = '${cart_status}', date =${(new Date()).toISOString().split('T')[0]} where cartId = ${cartId} `;
+
+  const sql = `update shopping_cart set cart_status = '${cart_status}', date =${new Date().toLocaleDateString("en-GB")} where cartId = ${cartId} `;
   const info = await dal.executeAsync(sql);
   return info.affectedRows === 0 ? null : cart;
 }
