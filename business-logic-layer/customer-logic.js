@@ -33,8 +33,9 @@ async function addItemAsync(item, cartId) {
     item.itemId = info.insertId;
     item.cartId = cartId;
     return returnProduct(cartId, item.productId);
-  } 
-  
+  } else {
+    return 400;
+  }
 }
 
 // return the added product
