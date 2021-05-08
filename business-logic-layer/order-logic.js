@@ -23,7 +23,7 @@ async function addNewOrderAsync(order, cartId, userId) {
     order.finalPrice,
     order.shippingCity,
     order.shippingStreet,
-    new Date(order.shippingDate + '00:00:00').toLocaleDateString("fr-CA", {timeZone: 'UTC'}),
+    new Date(order.shippingDate + 'T00:00:00').toLocaleDateString("fr-CA", {timeZone: 'UTC'}),
     new Date().toLocaleDateString("fr-CA"),
     order.creditCard,
   ]);
