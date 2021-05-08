@@ -23,7 +23,7 @@ async function addNewOrderAsync(order, cartId, userId) {
     order.finalPrice,
     order.shippingCity,
     order.shippingStreet,
-    new Date(order.shippingDate),
+    new Date(order.shippingDate).toDateString(),
     new Date().toLocaleDateString("fr-CA"),
     order.creditCard,
   ]);
